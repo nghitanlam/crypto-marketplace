@@ -99,6 +99,17 @@ table tr td:last-child {
   border-radius: 0 12px 12px 0;
 }
 
+table tr td.rank {
+  padding-left: 10px;
+}
+
+table tr td.name-column {
+  min-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 30px;
+}
+
 body {
   background: var(--background-color);
   display: flex;
@@ -240,12 +251,14 @@ nav .right-section > i.ri-moon-line {
   border: 1px solid var(--border-color);
 }
 
-.trending table {
+.trending table,
+.tab-container .tab-content table {
   width: 100%;
   border-spacing: 0 20px;
 }
 
-.trending table th {
+.trending table th,
+.tab-container .tab-content table th {
   color: var(--color-white);
   font-weight: 500;
   text-align: left;
@@ -258,7 +271,8 @@ nav .right-section > i.ri-moon-line {
   cursor: unset !important;
 }
 
-.trending .coins-wrapper table tr {
+.trending .coins-wrapper table tr,
+.tab-container .tab-content #asset-list table tr {
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -267,13 +281,16 @@ nav .right-section > i.ri-moon-line {
   padding: 5px;
 }
 
-.trending table tr td {
+.trending table tr td,
+.tab-container .tab-content table tr td {
   color: var(--text-secondary);
   font-size: 13px;
 }
 
 .trending .coins-wrapper table tr:hover,
-.trending .coins-wrapper table tr:hover td.table-fixed-column {
+.trending .coins-wrapper table tr:hover td.table-fixed-column,
+.tab-container .tab-content #asset-list table tr:hover,
+.tab-container .tab-content #asset-list table tr:hover td.table-fixed-column {
   background: var(--background-color-secondary);
 }
 
@@ -316,4 +333,96 @@ nav .right-section > i.ri-moon-line {
   color: red;
   text-align: center;
   margin-bottom: 20px;
+}
+
+.tab-container {
+  margin: 0 40px;
+  background-color: var(--background-color-primary);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.tab-container .tabs {
+  background: var(--background-color-secondary);
+  display: inline-flex;
+  gap: 20px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.tab-container .tabs .tab-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-container .tabs .tab-button i {
+  font-size: 20px;
+  color: var(--text-secondary);
+  transition: all 0.3 ease;
+}
+
+.tab-container .tabs .tab-button.active,
+.tab-container .tabs .tab-button.active i {
+  color: var(--color-white);
+}
+
+footer {
+  background: var(--background-color-primary);
+  width: 50%;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid var(--border-color);
+  margin: 0 auto;
+}
+
+footer p {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+footer .social-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+footer .social-icons a,
+#scrollTop {
+  background: var(--background-color);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+footer .social-icons a:hover,
+#scrollTop:hover {
+  background: var(--links-color);
+}
+
+footer .social-icons a i {
+  font-size: 26px;
+  color: var(--color-white);
+}
+
+#scrollTop {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  cursor: pointer;
+  background: var(--background-color-secondary);
+  padding: 6px;
+  font-size: 30px;
 }
