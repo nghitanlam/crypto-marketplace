@@ -88,3 +88,37 @@ function displayGlobalData(globalData) {
 
   dominance.textContent = `BTC ${btcDominance} - ETH ${ethDominance}`;
 }
+
+function toggleSpinner(listId, spinnerId, show) {
+  const listElement = document.getElementById(listId);
+  const spinnerElement = document.getElementById(spinnerId);
+
+  if (spinnerElement) {
+    spinnerElement.style.display = show ? "block" : "none";
+  }
+
+  if (listElement) {
+    listElement.style.display = show ? "none" : "block";
+  }
+}
+
+function createTable(headers, fixedIndex = 0) {
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  table.appendChild(thead);
+
+  const headerRow = document.createElement("tr");
+  headers.forEach((header, index) => {
+    const th = document.createElement("th");
+    th.textContent = header;
+
+    if (index === fixedIndex) {
+      th.classList.add("table-fixed-column");
+    }
+
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  return table;
+}
