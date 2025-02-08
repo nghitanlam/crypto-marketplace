@@ -292,3 +292,39 @@ function displayAssets(data) {
     });
   });
 }
+
+function displayExchanges(data) {
+  const exchangeList = document.getElementById("exchange-list");
+  exchangeList.innerHTML = "";
+  const table = createTable(
+    [
+      "Rank",
+      "Exchange",
+      "Trust Score",
+      "24h Trade",
+      "24h Trade (Normal)",
+      "Country",
+      "Website",
+      "Year",
+    ],
+    1,
+  );
+
+  data = data.slice(0, 20);
+
+  data.forEach((exchange) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+            <td class="rank">${exchange.trust_score_rank}</td>
+            <td class="name-column table-fixed-column"><img src="${exchange.image}" alt="${exchange.name}"> ${exchange.name}</td>
+            <td>${exchange.trust_score}</td>
+            <td>$${exchange.trade_volume_24h_btc.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} BTC</td>
+            <td>$${exchange.trade_volume_24h_btc_normalized.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} BTC</td>
+            <td class="name-column">${exchange.country || "N/A"}</td>
+            <td class="name-column">${exchange.url}</td>
+            <td>${exchange.year_established || "N/A"}</td>
+        `;
+    table.appendChild(row);
+  });
+  exchangeList.appendChild(table);
+}
