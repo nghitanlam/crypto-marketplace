@@ -6,6 +6,69 @@ const volume = document.getElementById("volume");
 const dominance = document.getElementById("dominance");
 
 document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.getElementById("theme-toggle");
+  const body = document.body;
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    body.id = savedTheme;
+    updateIcon(savedTheme);
+  }
+
+  themeToggle.addEventListener("click", () => {
+    if (body.id === "light-theme") {
+      body.id = "dark-theme";
+      localStorage.setItem("theme", "dark-theme");
+      updateIcon("dark-theme");
+    } else {
+      body.id = "light-theme";
+      localStorage.setItem("theme", "light-theme");
+      updateIcon("light-theme");
+    }
+
+    if (typeof initializeWidget === "function") {
+      initializeWidget();
+    }
+  });
+
+  function updateIcon(currentTheme) {
+    if (currentTheme === "light-theme") {
+      themeToggle.classList.remove("ri-moon-line");
+      themeToggle.classList.add("ri-sun-line");
+    } else {
+      themeToggle.classList.remove("ri-sun-line");
+      themeToggle.classList.add("ri-moon-line");
+    }
+  }
+
+  const form = document.getElementById("searchForm");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const query = document.getElementById("searchInput").value.trim();
+    if (!query) return;
+
+    window.location.href = `/../../pages/search.html?query=${query}`;
+  });
+
+  const openMenuBtn = document.getElementById("openMenu");
+  const overlay = document.querySelector(".overlay");
+  const closeMenuBtn = document.getElementById("closeMenu");
+
+  openMenuBtn.addEventListener("click", () => {
+    overlay.classList.add("show");
+  });
+
+  closeMenuBtn.addEventListener("click", () => {
+    overlay.classList.remove("show");
+  });
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove("show");
+    }
+  });
+
   fetchGlobal();
 });
 
@@ -68,7 +131,9 @@ function displayGlobalData(globalData) {
   const marketCapChange = globalData.market_cap_change_percentage_24h_usd;
   if (marketCapChange !== undefined) {
     const changeText = `${marketCapChange.toFixed(1)}%`;
-    marketCapChangeElement.innerHTML = `${changeText} <i class="${marketCapChange < 0 ? "red" : "green"} ri-arrow-${marketCapChange < 0 ? "down" : "up"}-s-fill"></i>`;
+    marketCapChangeElement.innerHTML = `${changeText} <i class="${
+      marketCapChange < 0 ? "red" : "green"
+    } ri-arrow-${marketCapChange < 0 ? "down" : "up"}-s-fill"></i>`;
     marketCapChangeElement.style.color = marketCapChange < 0 ? "red" : "green";
   } else {
     marketCapChangeElement.textContent = "N/A";
@@ -121,4 +186,28 @@ function createTable(headers, fixedIndex = 0) {
   thead.appendChild(headerRow);
 
   return table;
+}
+
+function createWidget(containerId, widgetConfig, widgetSrc) {
+  const container = document.getElementById(containerId);
+
+  container.innerHTML = "";
+
+  const widgetDiv = document.createElement("div");
+  widgetDiv.classList.add("tradingview-widget-container__widget");
+  container.appendChild(widgetDiv);
+
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = widgetSrc;
+  script.async = true;
+  script.innerHTML = JSON.stringify(widgetConfig);
+  container.appendChild(script);
+
+  setTimeout(() => {
+    const copyright = document.querySelector(".tradingview-widget-copyright");
+    if (copyright) {
+      copyright.classList.remove("hidden");
+    }
+  }, 5000);
 }

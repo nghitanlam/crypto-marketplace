@@ -23,7 +23,7 @@ function openTab(event, tabName) {
           ["asset-list"],
           displayAssets,
           tabName,
-          "Crypto_Data",
+          "Crypto_Data"
         );
         break;
       case "tab2":
@@ -32,7 +32,7 @@ function openTab(event, tabName) {
           ["exchange-list"],
           displayExchanges,
           tabName,
-          "Exchanges_Data",
+          "Exchanges_Data"
         );
         break;
       case "tab3":
@@ -41,7 +41,7 @@ function openTab(event, tabName) {
           ["category-list"],
           displayCategories,
           tabName,
-          "Categories_Data",
+          "Categories_Data"
         );
         break;
       case "tab4":
@@ -50,7 +50,7 @@ function openTab(event, tabName) {
           ["company-list"],
           displayCompanies,
           tabName,
-          "Companies_Data",
+          "Companies_Data"
         );
         break;
     }
@@ -69,14 +69,14 @@ async function fetchData() {
       ["coins-list", "nfts-list"],
       displayTrends,
       null,
-      "Trending_data",
+      "Trending_data"
     ),
     fetchAndDisplay(
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true",
       ["asset-list"],
       displayAssets,
       null,
-      "Crypto_Data",
+      "Crypto_Data"
     ),
   ]);
 }
@@ -86,7 +86,7 @@ async function fetchAndDisplay(
   idsToToggle,
   displayFunction,
   tabName = null,
-  localKey,
+  localKey
 ) {
   idsToToggle.forEach((id) => {
     const errorElement = document.getElementById(`${id}-error`);
@@ -160,7 +160,9 @@ function displayTrendCoins(coins) {
       <td>${parseFloat(coinData.price_btc).toFixed(6)}</td>
       <td>${coinData.data.market_cap}</td>
       <td>${coinData.data.total_volume}</td>
-      <td class="${coinData.data.price_change_percentage_24h.usd >= 0 ? "green" : "red"}">${coinData.data.price_change_percentage_24h.usd.toFixed(2)}%</td>
+      <td class="${
+        coinData.data.price_change_percentage_24h.usd >= 0 ? "green" : "red"
+      }">${coinData.data.price_change_percentage_24h.usd.toFixed(2)}%</td>
 `;
     row.onclick = () =>
       (window.location.href = `../../pages/coin.html?coin=${coinData.id}`);
@@ -188,7 +190,13 @@ function displayTrendNfts(nfts) {
       <td>${nft.native_currency_symbol.toUpperCase()}</td>
       <td>${nft.data.floor_price}</td>
       <td>${nft.data.h24_volume}</td>
-      <td class="${parseFloat(nft.data.floor_price_in_usd_24h_percentage_change) >= 0 ? "green" : "red"}">${parseFloat(nft.data.floor_price_in_usd_24h_percentage_change).toFixed(2)}%</td>
+      <td class="${
+        parseFloat(nft.data.floor_price_in_usd_24h_percentage_change) >= 0
+          ? "green"
+          : "red"
+      }">${parseFloat(
+      nft.data.floor_price_in_usd_24h_percentage_change
+    ).toFixed(2)}%</td>
       `;
     row.onclick = () =>
       (window.location.href = `../../pages/coin.html?coin=${nft.id}`);
@@ -213,7 +221,7 @@ function displayAssets(data) {
       "Market Cap",
       "Last 7 Days",
     ],
-    1,
+    1
   );
 
   const sparklineData = [];
@@ -227,10 +235,12 @@ function displayAssets(data) {
         <span>(${asset.symbol.toUpperCase()})</span>
       </td>
       <td>${asset.current_price.toFixed(2)}</td>
-      <td class="${asset.price_change_percentage_24h >= 0 ? "green" : "red"}">$${asset.price_change_24h.toFixed(2)}</td>
-      <td class="${asset.price_change_percentage_24h >= 0 ? "green" : "red"}">${asset.price_change_percentage_24h.toFixed(
-        2,
-      )}%</td>
+      <td class="${
+        asset.price_change_percentage_24h >= 0 ? "green" : "red"
+      }">$${asset.price_change_24h.toFixed(2)}</td>
+      <td class="${
+        asset.price_change_percentage_24h >= 0 ? "green" : "red"
+      }">${asset.price_change_percentage_24h.toFixed(2)}%</td>
       <td>$${asset.total_volume.toLocaleString()}</td>
       <td>$${asset.market_cap.toLocaleString()}</td>
       <td>
@@ -307,7 +317,7 @@ function displayExchanges(data) {
       "Website",
       "Year",
     ],
-    1,
+    1
   );
 
   data = data.slice(0, 20);
@@ -316,10 +326,18 @@ function displayExchanges(data) {
     const row = document.createElement("tr");
     row.innerHTML = `
             <td class="rank">${exchange.trust_score_rank}</td>
-            <td class="name-column table-fixed-column"><img src="${exchange.image}" alt="${exchange.name}"> ${exchange.name}</td>
+            <td class="name-column table-fixed-column"><img src="${
+              exchange.image
+            }" alt="${exchange.name}"> ${exchange.name}</td>
             <td>${exchange.trust_score}</td>
-            <td>$${exchange.trade_volume_24h_btc.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} BTC</td>
-            <td>$${exchange.trade_volume_24h_btc_normalized.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} BTC</td>
+            <td>$${exchange.trade_volume_24h_btc.toLocaleString(undefined, {
+              minimumFractionDigits: 3,
+              maximumFractionDigits: 3,
+            })} BTC</td>
+            <td>$${exchange.trade_volume_24h_btc_normalized.toLocaleString(
+              undefined,
+              { minimumFractionDigits: 3, maximumFractionDigits: 3 }
+            )} BTC</td>
             <td class="name-column">${exchange.country || "N/A"}</td>
             <td class="name-column">${exchange.url}</td>
             <td>${exchange.year_established || "N/A"}</td>
@@ -334,7 +352,7 @@ function displayCategories(data) {
   catagoriesList.innerHTML = "";
   const table = createTable(
     ["Top Coins", "Category", "Market Cap", "24h Market Cap", "24h Volume"],
-    1,
+    1
   );
 
   data = data.slice(0, 20);
@@ -342,13 +360,62 @@ function displayCategories(data) {
   data.forEach((category) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-            <td>${category.top_3_coins.map((coin) => `<img src="${coin}" alt="coin">`).join("")}</td>
+            <td>${category.top_3_coins
+              .map((coin) => `<img src="${coin}" alt="coin">`)
+              .join("")}</td>
             <td class="name-column table-fixed-column">${category.name}</td>
-            <td>$${category.market_cap ? category.market_cap.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 }) : "N/A"}</td>
-            <td class="${category.market_cap_change_24h >= 0 ? "green" : "red"}">${category.market_cap_change_24h ? category.market_cap_change_24h.toFixed(3) : "0"}%</td>
-            <td>$${category.volume_24h ? category.volume_24h.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 }) : "N/A"}</td>
+            <td>$${
+              category.market_cap
+                ? category.market_cap.toLocaleString(undefined, {
+                    minimumFractionDigits: 3,
+                    maximumFractionDigits: 3,
+                  })
+                : "N/A"
+            }</td>
+            <td class="${
+              category.market_cap_change_24h >= 0 ? "green" : "red"
+            }">${
+      category.market_cap_change_24h
+        ? category.market_cap_change_24h.toFixed(3)
+        : "0"
+    }%</td>
+            <td>$${
+              category.volume_24h
+                ? category.volume_24h.toLocaleString(undefined, {
+                    minimumFractionDigits: 3,
+                    maximumFractionDigits: 3,
+                  })
+                : "N/A"
+            }</td>
         `;
     table.appendChild(row);
   });
   catagoriesList.appendChild(table);
+}
+
+function displayCompanies(data) {
+  const companyList = document.getElementById("company-list");
+  companyList.innerHTML = "";
+  const table = createTable([
+    "Company",
+    "Total BTC",
+    "Entry Value",
+    "Total Current Value",
+    "Total %",
+  ]);
+
+  data.companies.forEach((company) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+         <td class="name-column table-fixed-column">${company.name}</td>
+          <td>${company.total_holdings}</td>
+          <td>${company.total_entry_value_usd}</td>
+          <td>${company.total_current_value_usd}</td>
+          <td class="${
+            company.percentage_of_total_supply >= 0 ? "green" : "red"
+          }">${company.percentage_of_total_supply}%</td>
+      `;
+    table.appendChild(row);
+  });
+  companyList.appendChild(table);
 }
