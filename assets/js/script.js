@@ -328,3 +328,27 @@ function displayExchanges(data) {
   });
   exchangeList.appendChild(table);
 }
+
+function displayCategories(data) {
+  const catagoriesList = document.getElementById("category-list");
+  catagoriesList.innerHTML = "";
+  const table = createTable(
+    ["Top Coins", "Category", "Market Cap", "24h Market Cap", "24h Volume"],
+    1,
+  );
+
+  data = data.slice(0, 20);
+
+  data.forEach((category) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+            <td>${category.top_3_coins.map((coin) => `<img src="${coin}" alt="coin">`).join("")}</td>
+            <td class="name-column table-fixed-column">${category.name}</td>
+            <td>$${category.market_cap ? category.market_cap.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 }) : "N/A"}</td>
+            <td class="${category.market_cap_change_24h >= 0 ? "green" : "red"}">${category.market_cap_change_24h ? category.market_cap_change_24h.toFixed(3) : "0"}%</td>
+            <td>$${category.volume_24h ? category.volume_24h.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 }) : "N/A"}</td>
+        `;
+    table.appendChild(row);
+  });
+  catagoriesList.appendChild(table);
+}
